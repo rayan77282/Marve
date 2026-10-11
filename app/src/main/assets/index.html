@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#101014">
+<title>MARVEL | الطريق إلى Doomsday</title>
+<style>
+:root{--bg:#07130f;--panel:#0d2119;--panel2:#143126;--text:#e8f5ec;--muted:#9bb5a5;--red:#3bd477;--gold:#b2e6bd;--line:#244737;--green:#65d6a3}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at top,#17432d 0,#07130f 48%);color:var(--text);font-family:system-ui,-apple-system,"Segoe UI",Tahoma,Arial,sans-serif;line-height:1.65}
+header{padding:34px 18px 26px;text-align:center;border-bottom:1px solid #244737}
+.logo{font-weight:1000;letter-spacing:3px;color:#fff;background:#e62429;display:inline-block;padding:2px 12px;font-size:18px;transform:skew(-7deg);border:2px solid #ff5558;box-shadow:0 0 22px #e6242944}
+h1{font-size:clamp(30px,6vw,58px);line-height:1.15;margin:18px 0 8px;font-weight:900}h1 span{color:var(--red)}header p{color:#c1d9ca;max-width:700px;margin:0 auto}
+.release{display:inline-block;margin-top:17px;padding:7px 13px;border:1px solid #387453;border-radius:999px;color:#b9f5ca;font-size:13px}
+main{max-width:1050px;margin:auto;padding:22px 14px 60px}.progressbox{background:linear-gradient(135deg,#102e20,#0d2119);border:1px solid #2d6546;padding:17px;border-radius:18px;margin-bottom:20px}
+.progressline{display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap;font-weight:700}.bar{height:9px;background:#20382b;border-radius:20px;overflow:hidden;margin-top:12px}.bar div{height:100%;width:0;background:linear-gradient(90deg,#26a95d,#9fffc0);transition:width .2s}
+.controls{display:flex;gap:9px;flex-wrap:wrap;margin:18px 0}.controls input,.controls select{background:var(--panel);color:var(--text);border:1px solid var(--line);border-radius:11px;padding:11px 12px;font:inherit;min-width:0}.controls input{flex:1;min-width:180px}.controls select{flex:0 1 190px}
+.note{color:var(--muted);font-size:13px;margin:5px 2px 22px}.section{margin-top:26px}.sectionhead{display:flex;align-items:center;gap:10px;margin:0 0 12px}.sectionhead h2{font-size:20px;margin:0}.pill{font-size:11px;padding:3px 8px;border-radius:999px;background:#1b402b;color:#b7f6c9}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,285px),1fr));gap:10px}.movie{display:flex;gap:12px;align-items:flex-start;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:13px;transition:border-color .15s}.movie:hover{border-color:#4a9d6b}.movie.done{opacity:.67;border-color:#37885a}.movie input{width:19px;height:19px;accent-color:var(--red);margin:4px 0 0;flex-shrink:0}.details{min-width:0;flex:1}.title{font-weight:800;font-size:15px;line-height:1.4}.meta{font-size:12px;color:var(--muted);margin-top:5px}.why{font-size:12px;color:#d0cbd4;margin-top:6px}.tag{display:inline-block;font-size:10px;border-radius:5px;padding:2px 6px;margin-inline-start:5px;background:#1a3829;color:#c9e8d3}.tag.important{background:#174a2c;color:#baf7ca}.tag.optional{background:#1a3d32;color:#bce8d0}.empty{display:none;text-align:center;color:var(--muted);padding:25px}.footer{border-top:1px solid var(--line);margin-top:36px;padding-top:18px;color:var(--muted);font-size:12px}.footer a{color:#aaf0c1}
+button{cursor:pointer;border:1px solid var(--line);background:var(--panel2);color:var(--text);border-radius:10px;padding:9px 12px;font:inherit}button:hover{border-color:#4fcf80}.reset{color:#aaf0c1}
+@media(max-width:480px){header{padding-top:25px}.progressline{align-items:flex-start}.controls select{flex:1}}
+</style>
+</head>
+<body>
+<header>
+  <div class="logo">MARVEL</div>
+  <h1>الطريق إلى <span>DOOMSDAY</span></h1>
+  <p>قائمة مشاهدتي لعالم مارفل: مراحل MCU، وأفلام Spider-Man وVenom وFantastic Four، ومسلسلات Loki وThe Punisher، وعالم X-Men وDeadpool.</p>
+  <div class="release">موعد الفيلم المعلن: 18 ديسمبر 2026</div>
+</header>
+<main>
+  <section class="progressbox">
+    <div class="progressline"><span>تقدّمك في المشاهدة</span><span id="count">0 من 0 فيلم</span></div>
+    <div class="bar"><div id="bar"></div></div>
+  </section>
+  <div class="controls">
+    <input id="search" type="search" placeholder="ابحث عن فيلم...">
+    <select id="filter"><option value="all">كل الأفلام</option><option value="unwatched">اللي ما شفتها</option><option value="watched">اللي شفتها</option><option value="essential">الأهم فقط</option><option value="xmen">عالم X-Men وDeadpool فقط</option></select>
+    <button id="reset" class="reset">إعادة التحديد</button>
+  </div>
+  <p class="note">علّم على المربع بعد ما تشاهد الفيلم. تقدّمك يُحفظ على نفس المتصفح والجهاز. القائمة مرتّبة حسب مجموعات مشاهدة مقترحة، وليست تأكيدًا أن كل فيلم ضروري للقصة.</p>
+  <div id="sections"></div>
+  <div id="empty" class="empty">ما لقينا أفلام تطابق بحثك.</div>
+  <div class="footer">
+    <strong>كيف تستخدم القائمة؟</strong><br>
+    ابدأ بالأفلام الأساسية، ثم شاهد مجموعة X-Men وDeadpool لفهم الشخصيات العائدة من عالم فوكس. بعض التفاصيل المستقبلية ما زالت غير معروفة، لذلك هذه قائمتي الشخصية؛ وبعض المشاريع المستقبلية أو تصنيفات المراحل قد تتغير.
+    <p>الموعد المعلن للفيلم: <a href="https://movies.disney.com/avengers-doomsday" target="_blank" rel="noopener">الموقع الرسمي لـ Disney</a>.</p>
+  </div>
+</main>
+<script>
+const groups = [
+ {name:"المرحلة 1",desc:"بداية عالم مارفل السينمائي",items:[
+  ["Iron Man","2008","MCU","أساسي","بداية عالم MCU."],
+  ["The Incredible Hulk","2008","MCU","مهم","مقدمة لهالك."],
+  ["Iron Man II","2010","MCU","مهم","يكمل قصة توني ستارك."],
+  ["Thor","2011","MCU","مهم","مقدمة لثور وأسغارد."],
+  ["Captain America: The First Avenger","2011","MCU","أساسي","أصل كابتن أمريكا."],
+  ["The Avengers","2012","MCU","أساسي","اجتماع الفريق لأول مرة."]
+ ]},
+ {name:"المرحلة 2",desc:"توسّع عالم الأبطال وتكوين الفريق",items:[
+  ["Iron Man III","2013","MCU","مهم","يكمل أحداث توني ستارك بعد Avengers."],
+  ["Thor: The Dark World","2013","MCU","مهم","أحداث كونية مرتبطة بعالم ثور."],
+  ["Captain America: The Winter Soldier","2014","MCU","أساسي","تغييرات كبيرة في عالم MCU."],
+  ["Guardians of the Galaxy","2014","MCU","مهم","تقديم حراس المجرة."],
+  ["Avengers: Age of Ultron","2015","MCU","أساسي","تغييرات مهمة للفريق."],
+  ["Ant-Man","2015","MCU","مهم","تقديم سكوت لانغ وعالم الكم."]
+ ]},
+ {name:"المرحلة 3",desc:"الانقسام، الحروب، ونهاية ملحمة إنفينيتي",items:[
+  ["Captain America: Civil War","2016","MCU","أساسي","انقسام الأبطال."],
+  ["Doctor Strange","2016","MCU","مهم","مقدمة للسحر والأبعاد."],
+  ["Guardians of the Galaxy Vol. 2","2017","MCU","مهم","يكمل قصة الحراس."],
+  ["Spider-Man: Homecoming","2017","MCU / Spider-Man","مهم","بداية رحلة بيتر باركر داخل MCU."],
+  ["Thor: Ragnarok","2017","MCU","أساسي","يمهّد لأحداث Infinity War."],
+  ["Black Panther","2018","MCU","مهم","تقديم واكاندا وشخصياتها."],
+  ["Avengers: Infinity War","2018","MCU","أساسي","جزء محوري من ملحمة إنفينيتي."],
+  ["Ant-Man and the Wasp","2018","MCU","مهم","مرتبط بأحداث ما بعد النهاية."],
+  ["Captain Marvel","2019","MCU","مهم","مقدمة لكارول دانفرز."],
+  ["Avengers: Endgame","2019","MCU","أساسي","نهاية ملحمة إنفينيتي."],
+  ["Spider-Man: Far From Home","2019","MCU / Spider-Man","مهم","يتابع آثار Endgame."]
+ ]},
+ {name:"المرحلة 4",desc:"أكوان سبايدرمان، فانتاستك فور، وأحداث ما بعد Endgame",items:[
+  ["Black Widow","2021","MCU","مهم","قصة ناتاشا رومانوف."],
+  ["Shang-Chi and the Legend of the Ten Rings","2021","MCU","مهم","تقديم شانغ تشي والخواتم."],
+  ["Eternals","2021","MCU","اختياري","يوسّع تاريخ عالم MCU."],
+  ["Spider-Man","2002","Spider-Man / Sony","مهم","بداية ثلاثية توبي ماغواير."],
+  ["Spider-Man II","2004","Spider-Man / Sony","مهم","الجزء الثاني من ثلاثية توبي."],
+  ["Spider-Man III","2007","Spider-Man / Sony","مهم","ختام ثلاثية توبي."],
+  ["The Amazing Spider-Man","2012","Spider-Man / Sony","مهم","بداية سلسلة أندرو غارفيلد."],
+  ["The Amazing Spider-Man II","2014","Spider-Man / Sony","مهم","يكمل قصة أندرو غارفيلد."],
+  ["Venom","2018","Sony","اختياري","مقدمة لإيدي بروك وفينوم."],
+  ["Venom: Let There Be Carnage","2021","Sony","مهم","له صلة بتقاطع الأكوان."],
+  ["Spider-Man: No Way Home","2021","MCU / Spider-Man","أساسي","يجمع خطوطًا مختلفة من عالم سبايدرمان."],
+  ["WandaVision","2021","MCU / مسلسل","مهم","يمهّد لأحداث مرتبطة بواندا."],
+  ["Fantastic Four","2005","Fantastic Four / Fox","مهم","نسخة فانتاستك فور الكلاسيكية."],
+  ["Fantastic Four: Rise of the Silver Surfer","2007","Fantastic Four / Fox","اختياري","يكمل نسخة 2005."],
+  ["Fantastic Four","2015","Fantastic Four / Fox","اختياري","إعادة تقديم مختلفة للفريق."],
+  ["Doctor Strange in the Multiverse of Madness","2022","MCU","أساسي","أحداث الأكوان المتعددة."],
+  ["Thor: Love and Thunder","2022","MCU","اختياري","يكمل مغامرات ثور."],
+  ["Black Panther: Wakanda Forever","2022","MCU","مهم","يتابع قصة واكاندا."]
+ ]},
+ {name:"المرحلة 5",desc:"الأكوان المتعددة وعودة شخصيات عالم فوكس",items:[
+  ["Loki — الموسم الأول","2021","MCU / مسلسل","أساسي","مهم لفهم الخطوط الزمنية والأكوان."],
+  ["Ant-Man and the Wasp: Quantumania","2023","MCU","مهم","يتناول عالم الكم وكانغ."],
+  ["Loki — الموسم الثاني","2023","MCU / مسلسل","أساسي","يكمل قصة الخطوط الزمنية."],
+  ["Guardians of the Galaxy Vol. 3","2023","MCU","اختياري","يكمل قصة الحراس."],
+  ["The Marvels","2023","MCU","اختياري","يتابع قصص شخصيات MCU."],
+  ["X-Men","2000","X-Men / Fox","أساسي","بداية فريق المتحوّلين السينمائي."],
+  ["X2","2003","X-Men / Fox","مهم","يكمل قصة الفريق."],
+  ["X-Men: The Last Stand","2006","X-Men / Fox","مهم","ختام الثلاثية الأصلية."],
+  ["X-Men Origins: Wolverine","2009","X-Men / Fox","اختياري","خلفية لوولفرين."],
+  ["X-Men: First Class","2011","X-Men / Fox","مهم","خلفية Xavier وMagneto."],
+  ["The Wolverine","2013","X-Men / Fox","مهم","فيلم منفرد لوولفرين."],
+  ["X-Men: Days of Future Past","2014","X-Men / Fox","أساسي","يربط أجيال السلسلة ويغيّر مسارها."],
+  ["X-Men: Apocalypse","2016","X-Men / Fox","مهم","يكمل خط الأفلام الأحدث."],
+  ["Deadpool","2016","X-Men / Fox","مهم","مقدمة لديدبول."],
+  ["Logan","2017","X-Men / Fox","مهم","قصة مستقلة ومؤثرة لوولفرين."],
+  ["Deadpool 2","2018","X-Men / Fox","مهم","يمهّد لشخصيات ومفاهيم تعود لاحقًا."],
+  ["Dark Phoenix","2019","X-Men / Fox","اختياري","يكمل خط X-Men الحديث."],
+  ["Deadpool & Wolverine","2024","MCU / X-Men","أساسي","تقاطع مهم بين عالم فوكس وMCU."],
+  ["Captain America: Brave New World","2025","MCU","مهم","يتابع عالم MCU بعد Endgame."],
+  ["Thunderbolts*","2025","MCU","مهم","يقدّم فريقًا جديدًا من الشخصيات."]
+ ]},
+ {name:"المرحلة 6",desc:"أعمال إضافية ومشاريع قادمة — حالة الإصدار موضّحة",items:[
+  ["The Punisher — الموسم الأول","2017","Marvel / مسلسل","اختياري","بداية قصة فرانك كاسل."],
+  ["The Punisher — الموسم الثاني","2019","Marvel / مسلسل","اختياري","يكمل قصة فرانك كاسل."],
+  ["The Punisher: One Last Kill","2027","Marvel / مشروع معلن","اختياري","مشروع مستقبلي؛ قد يتغير موعده أو وضعه."],
+  ["The Fantastic Four: First Steps","2025","MCU / Fantastic Four","أساسي","تقديم نسخة فانتاستك فور ضمن MCU."],
+  ["Spider-Man: Brand New Day","2026","MCU / Spider-Man","مهم","فيلم معلن للمستقبل؛ قد تتغير التفاصيل."]
+ ]}
+];
+const storageKey="marvelDoomsdayWatchlistV1";
+let watched={};try{watched=JSON.parse(localStorage.getItem(storageKey)||"{}")}catch(e){watched={}}
+const sections=document.getElementById("sections"),search=document.getElementById("search"),filter=document.getElementById("filter");
+const all=groups.flatMap((g,gi)=>g.items.map((m,mi)=>({...{name:m[0],year:m[1],universe:m[2],priority:m[3],why:m[4]},id:`${gi}-${mi}`,group:gi})));
+function render(){
+ sections.innerHTML="";let shown=0;
+ groups.forEach((g,gi)=>{
+  const matches=g.items.map((m,mi)=>({...{name:m[0],year:m[1],universe:m[2],priority:m[3],why:m[4]},id:`${gi}-${mi}`,group:gi}))
+   .filter(m=>m.name.toLowerCase().includes(search.value.toLowerCase())||m.universe.toLowerCase().includes(search.value.toLowerCase()))
+   .filter(m=>filter.value==="all"||(filter.value==="watched"&&watched[m.id])||(filter.value==="unwatched"&&!watched[m.id])||(filter.value==="essential"&&m.priority==="أساسي")||(filter.value==="xmen"&&m.universe.includes("X-Men")));
+  if(!matches.length)return;shown+=matches.length;
+  const section=document.createElement("section");section.className="section";
+  const head=document.createElement("div");head.className="sectionhead";
+  const h=document.createElement("h2");h.textContent=g.name;head.appendChild(h);
+  const pill=document.createElement("span");pill.className="pill";pill.textContent=`${matches.filter(m=>watched[m.id]).length}/${matches.length}`;head.appendChild(pill);
+  section.appendChild(head);
+  const desc=document.createElement("p");desc.className="note";desc.textContent=g.desc;section.appendChild(desc);
+  const cards=document.createElement("div");cards.className="cards";
+  matches.forEach(m=>{
+   const label=document.createElement("label");label.className="movie"+(watched[m.id]?" done":"");
+   const cb=document.createElement("input");cb.type="checkbox";cb.checked=!!watched[m.id];cb.setAttribute("aria-label","تمت مشاهدة "+m.name);
+   cb.addEventListener("change",()=>{watched[m.id]=cb.checked;localStorage.setItem(storageKey,JSON.stringify(watched));render()});
+   const d=document.createElement("div");d.className="details";
+   const title=document.createElement("div");title.className="title";title.textContent=m.name;
+   const tag=document.createElement("span");tag.className="tag "+(m.priority==="أساسي"?"important":m.priority==="اختياري"?"optional":"");tag.textContent=m.priority;title.appendChild(tag);
+   const meta=document.createElement("div");meta.className="meta";meta.textContent=`${m.year} · ${m.universe}`;
+   const why=document.createElement("div");why.className="why";why.textContent=m.why;
+   d.append(title,meta,why);label.append(cb,d);cards.appendChild(label);
+  });
+  section.appendChild(cards);sections.appendChild(section);
+ });
+ document.getElementById("empty").style.display=shown?"none":"block";
+ const done=all.filter(m=>watched[m.id]).length;
+ document.getElementById("count").textContent=`${done} من ${all.length} فيلم`;
+ document.getElementById("bar").style.width=(done/all.length*100)+"%";
+}
+search.addEventListener("input",render);filter.addEventListener("change",render);
+document.getElementById("reset").addEventListener("click",()=>{if(confirm("هل تريد مسح كل علامات المشاهدة؟")){watched={};localStorage.removeItem(storageKey);render()}});
+render();
+</script>
+</body>
+</html>
